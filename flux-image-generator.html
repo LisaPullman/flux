@@ -1,0 +1,1161 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FOXAI FLUX - 智能图像生成器</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --fox-primary: #FF6B35;
+            --fox-secondary: #F7931E;
+            --fox-accent: #FFB800;
+            --fox-dark: #2C3E50;
+            --fox-light: #ECF0F1;
+            --fox-blue: #3498DB;
+            --fox-purple: #9B59B6;
+            --fox-gradient: linear-gradient(135deg, #FF6B35 0%, #F7931E 50%, #FFB800 100%);
+            --fox-gradient-dark: linear-gradient(135deg, #2C3E50 0%, #34495E 100%);
+            --fox-gradient-light: linear-gradient(135deg, #ECF0F1 0%, #BDC3C7 100%);
+            --shadow-soft: 0 10px 30px rgba(255, 107, 53, 0.1);
+            --shadow-medium: 0 15px 40px rgba(255, 107, 53, 0.15);
+            --shadow-strong: 0 20px 60px rgba(255, 107, 53, 0.2);
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 25%, #FF6B35 75%, #F7931E 100%);
+            min-height: 100vh;
+            padding: 20px;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000"><defs><pattern id="foxPattern" width="50" height="50" patternUnits="userSpaceOnUse"><circle cx="25" cy="25" r="1" fill="white" opacity="0.1"/><circle cx="10" cy="40" r="0.5" fill="orange" opacity="0.1"/><circle cx="40" cy="10" r="0.8" fill="yellow" opacity="0.08"/></pattern></defs><rect width="100%" height="100%" fill="url(%23foxPattern)"/></svg>');
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 24px;
+            box-shadow: var(--shadow-strong);
+            overflow: hidden;
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .header {
+            background: var(--fox-gradient);
+            color: white;
+            padding: 60px 40px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="headerPattern" width="60" height="60" patternUnits="userSpaceOnUse"><path d="M30 15 L35 25 L25 25 Z" fill="white" opacity="0.1"/><circle cx="45" cy="45" r="2" fill="white" opacity="0.08"/><path d="M15 45 Q20 40 25 45 Q20 50 15 45" fill="white" opacity="0.06"/></pattern></defs><rect width="100" height="100" fill="url(%23headerPattern)"/></svg>');
+            pointer-events: none;
+        }
+
+        .foxai-logo {
+            display: inline-flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .fox-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #fff 0%, #f8f9fa 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+            animation: foxBounce 2s ease-in-out infinite;
+        }
+
+        @keyframes foxBounce {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-10px) rotate(5deg); }
+        }
+
+        .brand-text {
+            font-size: 3.2em;
+            font-weight: 700;
+            text-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            position: relative;
+            z-index: 2;
+            background: linear-gradient(45deg, #fff, #fff, #FFB800);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: brandGlow 3s ease-in-out infinite;
+        }
+
+        @keyframes brandGlow {
+            0%, 100% { filter: brightness(1); }
+            50% { filter: brightness(1.2) drop-shadow(0 0 20px rgba(255, 184, 0, 0.5)); }
+        }
+
+        .subtitle {
+            font-size: 1.3em;
+            margin-top: 15px;
+            opacity: 0.95;
+            position: relative;
+            z-index: 2;
+            font-weight: 400;
+            animation: fadeInUp 0.8s ease-out 0.3s both;
+        }
+
+        .tagline {
+            font-size: 1.1em;
+            margin-top: 20px;
+            opacity: 0.9;
+            position: relative;
+            z-index: 2;
+            font-weight: 300;
+            animation: fadeInUp 0.8s ease-out 0.5s both;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 15px 25px;
+            border-radius: 25px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            display: inline-block;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            padding: 40px;
+        }
+
+        .form-section {
+            background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+            padding: 40px;
+            border-radius: 20px;
+            border: 1px solid #e9ecef;
+            box-shadow: var(--shadow-soft);
+            transition: all 0.4s ease;
+            animation: slideInLeft 0.8s ease-out;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .form-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: var(--fox-gradient);
+        }
+
+        .form-section:hover {
+            box-shadow: var(--shadow-medium);
+            transform: translateY(-5px);
+        }
+
+        .section-title {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 30px;
+            color: var(--fox-dark);
+            font-size: 1.4em;
+            font-weight: 600;
+        }
+
+        .section-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--fox-gradient);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 20px;
+            box-shadow: var(--shadow-soft);
+        }
+
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 10px;
+            font-weight: 600;
+            color: var(--fox-dark);
+            font-size: 15px;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 16px 20px;
+            border: 2px solid #e9ecef;
+            border-radius: 12px;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            background: white;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            font-family: inherit;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--fox-primary);
+            box-shadow: 0 0 0 4px rgba(255, 107, 53, 0.15), 0 6px 20px rgba(255, 107, 53, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .form-group input:hover,
+        .form-group textarea:hover {
+            border-color: var(--fox-secondary);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 120px;
+            font-family: inherit;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .btn {
+            background: var(--fox-gradient);
+            color: white;
+            border: none;
+            padding: 18px 36px;
+            border-radius: 15px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            width: 100%;
+            margin-top: 25px;
+            box-shadow: var(--shadow-medium);
+            position: relative;
+            overflow: hidden;
+            font-family: inherit;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.6s;
+        }
+
+        .btn:hover::before {
+            left: 100%;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-strong);
+        }
+
+        .btn:active {
+            transform: translateY(-1px);
+            box-shadow: var(--shadow-medium);
+        }
+
+        .btn:disabled {
+            background: #6c757d;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .result-section {
+            background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+            padding: 40px;
+            border-radius: 20px;
+            border: 1px solid #e9ecef;
+            text-align: center;
+            box-shadow: var(--shadow-soft);
+            transition: all 0.4s ease;
+            animation: slideInRight 0.8s ease-out;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .result-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(135deg, var(--fox-blue) 0%, var(--fox-purple) 100%);
+        }
+
+        .result-section:hover {
+            box-shadow: var(--shadow-medium);
+            transform: translateY(-5px);
+        }
+
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .loading {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            gap: 25px;
+            padding: 40px 0;
+        }
+
+        .spinner {
+            width: 60px;
+            height: 60px;
+            border: 4px solid #e9ecef;
+            border-top: 4px solid var(--fox-primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            position: relative;
+        }
+
+        .spinner::after {
+            content: '🦊';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 20px;
+            animation: foxSpin 2s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @keyframes foxSpin {
+            0%, 100% { transform: translate(-50%, -50%) scale(1); }
+            50% { transform: translate(-50%, -50%) scale(1.2); }
+        }
+
+        .loading-text {
+            color: var(--fox-dark);
+            font-weight: 500;
+            font-size: 16px;
+        }
+
+        .loading-subtext {
+            color: #6c757d;
+            font-size: 14px;
+            margin-top: -10px;
+        }
+
+        .result-image {
+            max-width: 100%;
+            border-radius: 20px;
+            box-shadow: var(--shadow-medium);
+            margin-top: 30px;
+            transition: all 0.4s ease;
+            animation: zoomIn 0.6s ease-out;
+        }
+
+        .result-image:hover {
+            transform: scale(1.02);
+            box-shadow: var(--shadow-strong);
+        }
+
+        @keyframes zoomIn {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .enhanced-prompt {
+            background: linear-gradient(135deg, #e3f2fd 0%, #f0f8ff 100%);
+            border: 2px solid #bbdefb;
+            border-radius: 15px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: left;
+            position: relative;
+        }
+
+        .enhanced-prompt::before {
+            content: '🚀';
+            position: absolute;
+            top: -10px;
+            left: 20px;
+            background: var(--fox-gradient);
+            color: white;
+            padding: 8px 12px;
+            border-radius: 25px;
+            font-size: 16px;
+            box-shadow: var(--shadow-soft);
+        }
+
+        .enhanced-prompt h4 {
+            color: var(--fox-blue);
+            margin-bottom: 12px;
+            margin-top: 10px;
+            font-weight: 600;
+        }
+
+        .enhanced-prompt p {
+            color: #424242;
+            line-height: 1.6;
+            font-size: 14px;
+        }
+
+        .error {
+            background: linear-gradient(135deg, #ffebee 0%, #fce4ec 100%);
+            border: 2px solid #ffcdd2;
+            color: #c62828;
+            padding: 20px;
+            border-radius: 15px;
+            margin: 20px 0;
+            position: relative;
+        }
+
+        .error::before {
+            content: '⚠️';
+            position: absolute;
+            top: -10px;
+            left: 20px;
+            background: #f44336;
+            color: white;
+            padding: 8px 12px;
+            border-radius: 25px;
+            font-size: 16px;
+            box-shadow: var(--shadow-soft);
+        }
+
+        .placeholder {
+            color: #6c757d;
+            font-style: italic;
+            padding: 80px 30px;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border-radius: 20px;
+            border: 3px dashed #dee2e6;
+            margin: 25px 0;
+            transition: all 0.4s ease;
+            position: relative;
+        }
+
+        .placeholder::before {
+            content: '🎨';
+            position: absolute;
+            top: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 40px;
+            opacity: 0.7;
+        }
+
+        .placeholder:hover {
+            border-color: var(--fox-primary);
+            background: linear-gradient(135deg, #fff5f0 0%, #ffe8e0 100%);
+            color: var(--fox-dark);
+        }
+
+        .placeholder p {
+            font-size: 16px;
+            margin: 0;
+            margin-top: 20px;
+        }
+
+        .download-btn {
+            background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+            color: white;
+            border: none;
+            padding: 14px 28px;
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 25px;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+            box-shadow: 0 6px 20px rgba(40, 167, 69, 0.2);
+            position: relative;
+            overflow: hidden;
+            font-family: inherit;
+        }
+
+        .download-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.5s;
+        }
+
+        .download-btn:hover::before {
+            left: 100%;
+        }
+
+        .download-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 30px rgba(40, 167, 69, 0.4);
+        }
+
+        .download-btn:active {
+            transform: translateY(0);
+            box-shadow: 0 6px 20px rgba(40, 167, 69, 0.3);
+        }
+
+        .status-indicator {
+            position: fixed;
+            top: 25px;
+            right: 25px;
+            padding: 12px 18px;
+            border-radius: 25px;
+            font-size: 14px;
+            font-weight: 600;
+            z-index: 1000;
+            transition: all 0.4s ease;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .status-online {
+            background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%);
+            color: #155724;
+            box-shadow: 0 8px 25px rgba(21, 87, 36, 0.15);
+        }
+
+        .status-offline {
+            background: linear-gradient(135deg, #f8d7da 0%, #f5c6cb 100%);
+            color: #721c24;
+            box-shadow: 0 8px 25px rgba(114, 28, 36, 0.15);
+        }
+
+        .status-checking {
+            background: linear-gradient(135deg, #fff3cd 0%, #ffeaa7 100%);
+            color: #856404;
+            box-shadow: 0 8px 25px rgba(133, 100, 4, 0.15);
+        }
+
+        .random-seed-btn {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: var(--fox-gradient);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(255, 107, 53, 0.2);
+        }
+
+        .random-seed-btn:hover {
+            transform: translateY(-50%) scale(1.1);
+            box-shadow: 0 4px 15px rgba(255, 107, 53, 0.3);
+        }
+
+        @media (max-width: 1024px) {
+            .content {
+                grid-template-columns: 1fr;
+                gap: 30px;
+                padding: 30px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 15px;
+            }
+
+            .header {
+                padding: 40px 25px;
+            }
+
+            .brand-text {
+                font-size: 2.5em;
+            }
+
+            .content {
+                padding: 25px;
+                gap: 25px;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+
+            .form-section,
+            .result-section {
+                padding: 30px 25px;
+            }
+
+            .placeholder {
+                padding: 60px 20px;
+            }
+
+            .placeholder p {
+                font-size: 14px;
+            }
+
+            .foxai-logo {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .fox-icon {
+                width: 50px;
+                height: 50px;
+                font-size: 24px;
+            }
+        }
+
+        /* FOXAI特色动画效果 */
+        @keyframes foxAI {
+            0% { transform: rotate(0deg) scale(1); }
+            25% { transform: rotate(5deg) scale(1.05); }
+            50% { transform: rotate(0deg) scale(1); }
+            75% { transform: rotate(-5deg) scale(1.05); }
+            100% { transform: rotate(0deg) scale(1); }
+        }
+
+        .fox-icon:hover {
+            animation: foxAI 0.6s ease-in-out;
+        }
+    </style>
+</head>
+<body>
+    <!-- 服务器状态指示器 -->
+    <div id="statusIndicator" class="status-indicator status-checking">
+        🔄 检查服务器连接...
+    </div>
+    
+    <div class="container">
+        <div class="header">
+            <div class="foxai-logo">
+                <div class="fox-icon">🦊</div>
+                <div class="brand-text">FOXAI FLUX</div>
+            </div>
+            <div class="subtitle">🎨 智能图像生成器</div>
+            <div class="tagline">
+                ✨ 使用先进的 AI 技术，将您的想象转化为精美图像 ✨<br>
+                🚀 由 FOXAI 强力驱动，为您带来无限创意可能
+            </div>
+        </div>
+
+        <div class="content">
+            <div class="form-section">
+                <div class="section-title">
+                    <div class="section-icon">📝</div>
+                    <span>图像参数设置</span>
+                </div>
+                <form id="imageForm">
+                    <div class="form-group">
+                        <label for="prompt">
+                            🖼️ 图像描述提示词 *
+                        </label>
+                        <textarea 
+                            id="prompt" 
+                            name="prompt" 
+                            placeholder="请描述您想要生成的图像，例如：一只可爱的小狐狸坐在星空下的花园里，数字艺术风格"
+                            required
+                        ></textarea>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="width">
+                                📏 图像宽度
+                            </label>
+                            <input 
+                                type="number" 
+                                id="width" 
+                                name="width" 
+                                value="1024" 
+                                min="256" 
+                                max="2048" 
+                                step="64"
+                            >
+                        </div>
+                        <div class="form-group">
+                            <label for="height">
+                                📐 图像高度
+                            </label>
+                            <input 
+                                type="number" 
+                                id="height" 
+                                name="height" 
+                                value="1024" 
+                                min="256" 
+                                max="2048" 
+                                step="64"
+                            >
+                        </div>
+                    </div>
+
+                    <div class="form-group" style="position: relative;">
+                        <label for="seed">
+                            🎲 随机种子（可选）
+                        </label>
+                        <input 
+                            type="number" 
+                            id="seed" 
+                            name="seed" 
+                            placeholder="留空则随机生成，输入数字可重现相同结果"
+                        >
+                        <button type="button" class="random-seed-btn" id="randomSeedBtn" title="生成随机种子">
+                            🎲
+                        </button>
+                    </div>
+
+                    <button type="submit" class="btn" id="generateBtn">
+                        ✨ 开始创作图像
+                    </button>
+                </form>
+            </div>
+
+            <div class="result-section">
+                <div class="section-title">
+                    <div class="section-icon" style="background: linear-gradient(135deg, var(--fox-blue) 0%, var(--fox-purple) 100%);">🖼️</div>
+                    <span>创作结果</span>
+                </div>
+                
+                <div id="placeholder" class="placeholder">
+                    <p>👆 请在左侧填写参数并点击"开始创作图像"来释放您的创意</p>
+                </div>
+
+                <div id="loading" class="loading">
+                    <div class="spinner"></div>
+                    <div class="loading-text">FOXAI 正在优化提示词并生成图像...</div>
+                    <div class="loading-subtext">这可能需要几秒钟时间，请耐心等待</div>
+                </div>
+
+                <div id="result" style="display: none;">
+                    <div id="enhancedPromptSection" class="enhanced-prompt" style="display: none;">
+                        <h4>✨ FOXAI 优化后的提示词：</h4>
+                        <p id="enhancedPrompt"></p>
+                    </div>
+                    
+                    <img id="resultImage" class="result-image" style="display: none;">
+                    
+                    <div id="imageActions" style="display: none;">
+                        <a id="downloadBtn" class="download-btn" download="foxai-flux-generated-image.png">
+                            💾 下载图像
+                        </a>
+                    </div>
+                </div>
+
+                <div id="error" class="error" style="display: none;"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 配置 - 已配置为您的服务器地址
+        const API_ENDPOINTS = [
+            'http://35.212.175.4:5678/webhook/flux',
+            'http://35.212.175.4:5678/webhook/a5a9106f-2389-4b29-8423-8c0d94717ed2',
+            'http://35.212.175.4:5678/webhook-test/flux'
+        ];
+        let API_BASE_URL = API_ENDPOINTS[0]; // 默认使用第一个
+        
+        const form = document.getElementById('imageForm');
+        const generateBtn = document.getElementById('generateBtn');
+        const placeholder = document.getElementById('placeholder');
+        const loading = document.getElementById('loading');
+        const result = document.getElementById('result');
+        const error = document.getElementById('error');
+        const enhancedPromptSection = document.getElementById('enhancedPromptSection');
+        const enhancedPrompt = document.getElementById('enhancedPrompt');
+        const resultImage = document.getElementById('resultImage');
+        const imageActions = document.getElementById('imageActions');
+        const statusIndicator = document.getElementById('statusIndicator');
+        const randomSeedBtn = document.getElementById('randomSeedBtn');
+
+        // 随机种子生成器
+        randomSeedBtn.addEventListener('click', () => {
+            document.getElementById('seed').value = Math.floor(Math.random() * 1000000);
+        });
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            // 获取表单数据
+            const formData = new FormData(form);
+            const params = new URLSearchParams();
+            
+            // 添加必需参数
+            params.append('prompt', formData.get('prompt'));
+            params.append('width', formData.get('width') || '1024');
+            params.append('height', formData.get('height') || '1024');
+            
+            // 添加可选参数
+            if (formData.get('seed')) {
+                params.append('seed', formData.get('seed'));
+            }
+
+            // 显示加载状态
+            showLoading();
+
+            try {
+                // 调用API
+                const response = await fetch(`${API_BASE_URL}?${params.toString()}`, {
+                    method: 'GET',
+                    headers: {
+                        'Accept': 'application/json',
+                    }
+                });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+
+                const data = await response.json();
+                
+                if (data.success) {
+                    showResult(data);
+                } else {
+                    showError(data.error || '生成图像失败，请重试');
+                }
+
+            } catch (err) {
+                console.error('Error:', err);
+                if (err.name === 'TypeError' && err.message.includes('fetch')) {
+                    showError(`无法连接到 FOXAI 服务器 (${API_BASE_URL})，请检查：\n1. 服务器是否正在运行\n2. 网络连接是否正常\n3. 防火墙设置是否允许访问`);
+                } else {
+                    showError(`请求失败：${err.message}\n请检查 FOXAI 服务器配置并重试`);
+                }
+            }
+        });
+
+        function showLoading() {
+            generateBtn.disabled = true;
+            generateBtn.textContent = '🎨 FOXAI 创作中...';
+            
+            placeholder.style.display = 'none';
+            result.style.display = 'none';
+            error.style.display = 'none';
+            loading.style.display = 'flex';
+        }
+
+        function showResult(data) {
+            generateBtn.disabled = false;
+            generateBtn.textContent = '✨ 开始创作图像';
+            
+            loading.style.display = 'none';
+            placeholder.style.display = 'none';
+            error.style.display = 'none';
+            
+            // 显示优化后的提示词
+            if (data.enhancedPrompt) {
+                enhancedPrompt.textContent = data.enhancedPrompt;
+                enhancedPromptSection.style.display = 'block';
+            }
+            
+            // 显示图像
+            if (data.imageUrl) {
+                resultImage.src = data.imageUrl;
+                resultImage.style.display = 'block';
+                
+                // 设置下载功能
+                setupDownloadButton(data.imageUrl);
+                imageActions.style.display = 'block';
+                
+                // 图像加载完成后显示结果区域
+                resultImage.onload = () => {
+                    result.style.display = 'block';
+                };
+            }
+        }
+
+        function showError(message) {
+            generateBtn.disabled = false;
+            generateBtn.textContent = '✨ 开始创作图像';
+            
+            loading.style.display = 'none';
+            placeholder.style.display = 'none';
+            result.style.display = 'none';
+            
+            error.textContent = message;
+            error.style.display = 'block';
+        }
+
+        // 设置下载按钮功能
+        function setupDownloadButton(imageUrl) {
+            console.log('设置下载按钮，图片URL:', imageUrl);
+            
+            // 使用更安全的方式获取下载按钮元素
+            const currentDownloadBtn = document.querySelector('#downloadBtn');
+            
+            // 检查元素是否存在
+            if (!currentDownloadBtn) {
+                console.error('下载按钮元素未找到');
+                return;
+            }
+            
+            console.log('找到下载按钮元素:', currentDownloadBtn);
+            
+            // 完全清除之前的事件监听器
+            // 通过克隆节点的方式彻底清除所有事件监听器
+            const newDownloadBtn = currentDownloadBtn.cloneNode(true);
+            const parentNode = currentDownloadBtn.parentNode;
+            
+            // 检查父节点是否存在
+            if (!parentNode) {
+                console.error('下载按钮的父节点不存在');
+                return;
+            }
+            
+            // 安全地替换节点
+            try {
+                parentNode.replaceChild(newDownloadBtn, currentDownloadBtn);
+                console.log('成功替换下载按钮节点');
+            } catch (error) {
+                console.error('替换下载按钮节点失败:', error);
+                // 如果替换失败，直接在原按钮上添加监听器
+                setupDownloadButtonDirect(currentDownloadBtn, imageUrl);
+                return;
+            }
+            
+            // 在新按钮上添加事件监听器
+            setupDownloadButtonDirect(newDownloadBtn, imageUrl);
+        }
+        
+        // 直接在按钮上设置下载功能的辅助函数
+        function setupDownloadButtonDirect(btnElement, imageUrl) {
+            if (!btnElement) {
+                console.error('按钮元素为空');
+                return;
+            }
+            
+            console.log('在按钮上添加下载监听器');
+            
+            // 添加点击事件监听器
+            btnElement.addEventListener('click', async (e) => {
+                e.preventDefault();
+                console.log('下载按钮被点击');
+                
+                try {
+                    // 显示下载状态
+                    const originalText = btnElement.textContent;
+                    btnElement.textContent = '⏳ FOXAI 下载中...';
+                    btnElement.style.pointerEvents = 'none';
+                    
+                    // 获取图片数据
+                    const response = await fetch(imageUrl);
+                    if (!response.ok) {
+                        throw new Error('下载失败');
+                    }
+                    
+                    const blob = await response.blob();
+                    
+                    // 创建下载链接
+                    const downloadUrl = window.URL.createObjectURL(blob);
+                    const link = document.createElement('a');
+                    link.href = downloadUrl;
+                    
+                    // 生成文件名（包含时间戳）
+                    const timestamp = new Date().toISOString().replace(/[:.]/g, '-').slice(0, -5);
+                    link.download = `foxai-flux-generated-${timestamp}.png`;
+                    
+                    // 触发下载
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+                    
+                    // 清理URL对象
+                    window.URL.revokeObjectURL(downloadUrl);
+                    
+                    // 恢复按钮状态
+                    btnElement.textContent = originalText;
+                    btnElement.style.pointerEvents = 'auto';
+                    
+                    console.log('FOXAI 下载完成');
+                    
+                } catch (error) {
+                    console.error('下载失败:', error);
+                    
+                    // 恢复按钮状态
+                    btnElement.textContent = '💾 下载图像';
+                    btnElement.style.pointerEvents = 'auto';
+                    
+                    // 显示错误提示
+                    alert('下载失败，请右键点击图片选择"另存为"');
+                    
+                    // 备用方案：在新窗口打开图片
+                    window.open(imageUrl, '_blank');
+                }
+            });
+        }
+
+        // 服务器状态检查
+        async function checkServerStatus() {
+            statusIndicator.className = 'status-indicator status-checking';
+            statusIndicator.textContent = '🔄 检查 FOXAI 服务器连接...';
+            
+            let workingEndpoint = null;
+            
+            for (let i = 0; i < API_ENDPOINTS.length; i++) {
+                const endpoint = API_ENDPOINTS[i];
+                try {
+                    console.log(`Testing FOXAI endpoint: ${endpoint}`);
+                    
+                    const response = await fetch(`${endpoint}?prompt=test`, {
+                        method: 'GET',
+                        headers: {
+                            'Accept': 'application/json',
+                        },
+                        timeout: 5000
+                    });
+                    
+                    if (response.ok || response.status === 400 || response.status === 500) {
+                        // 200 OK, 400 Bad Request 或 500 Internal Server Error 都表示服务器在线
+                        workingEndpoint = endpoint;
+                        API_BASE_URL = endpoint;
+                        break;
+                    }
+                } catch (err) {
+                    console.log(`FOXAI Endpoint ${endpoint} failed:`, err.message);
+                    continue;
+                }
+            }
+            
+            if (workingEndpoint) {
+                statusIndicator.className = 'status-indicator status-online';
+                statusIndicator.textContent = `✅ FOXAI 服务器在线 (${workingEndpoint.split('/').pop()})`;
+                
+                // 3秒后隐藏状态指示器
+                setTimeout(() => {
+                    statusIndicator.style.display = 'none';
+                }, 3000);
+            } else {
+                statusIndicator.className = 'status-indicator status-offline';
+                statusIndicator.textContent = '❌ FOXAI 所有端点都无法连接';
+                
+                // 显示详细错误信息
+                setTimeout(() => {
+                    statusIndicator.textContent = '❌ 请检查: 1.工作流是否激活 2.n8n是否运行 3.防火墙设置';
+                }, 2000);
+            }
+        }
+
+        // 页面加载时检查服务器状态
+        window.addEventListener('load', checkServerStatus);
+
+        // FOXAI 特色交互效果
+        document.addEventListener('DOMContentLoaded', function() {
+            // 添加鼠标移动效果
+            document.addEventListener('mousemove', function(e) {
+                const foxIcon = document.querySelector('.fox-icon');
+                if (foxIcon) {
+                    const rect = foxIcon.getBoundingClientRect();
+                    const centerX = rect.left + rect.width / 2;
+                    const centerY = rect.top + rect.height / 2;
+                    
+                    const deltaX = (e.clientX - centerX) / 50;
+                    const deltaY = (e.clientY - centerY) / 50;
+                    
+                    foxIcon.style.transform = `translate(${deltaX}px, ${deltaY}px)`;
+                }
+            });
+
+            // 页面滚动效果
+            window.addEventListener('scroll', function() {
+                const scrolled = window.pageYOffset;
+                const rate = scrolled * -0.5;
+                
+                document.body.style.transform = `translateY(${rate}px)`;
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,325 @@
+{
+  "name": "flux250704",
+  "nodes": [
+    {
+      "parameters": {
+        "path": "flux",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "e387a35a-9c83-4a58-8ebe-69528c45959b",
+      "name": "GET请求",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        0,
+        300
+      ],
+      "webhookId": "a5a9106f-2389-4b29-8423-8c0d94717ed2"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.siliconflow.cn/v1/chat/completions",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpBearerAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"model\": \"Qwen/Qwen2.5-7B-Instruct\",\n  \"messages\": [\n    {\n      \"role\": \"system\",\n      \"content\": \"你是一个专业的AI图像生成提示词优化专家。请将用户输入的简单描述转换为详细、专业的FLUX图像生成提示词。要求：1. 保持原意不变 2. 添加艺术风格、光影效果、构图细节 3. 使用英文输出 4. 提示词要具体且富有表现力 5. 长度控制在100-200词之间\"\n    },\n    {\n      \"role\": \"user\",\n      \"content\": \"请优化这个图像描述：{{ $('GET请求').item.json.query.prompt }}\"\n    }\n  ],\n  \"max_tokens\": 300,\n  \"temperature\": 0.7\n}",
+        "options": {}
+      },
+      "id": "da9769b1-b88a-4ef3-9e89-bf213239ae49",
+      "name": "提示词优化",
+      "type": "n8n-nodes-base.httpRequest",
+      "position": [
+        200,
+        300
+      ],
+      "typeVersion": 4.2,
+      "credentials": {
+        "httpBearerAuth": {
+          "id": "kDSNYisuS6BtbNhR",
+          "name": "Bearer Auth account"
+        }
+      },
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "06e13542-cb9a-4a81-823e-07c913ba79f9",
+              "leftValue": "={{ $('GET请求').item.json.query.seed }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "exists",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        400,
+        300
+      ],
+      "id": "c012a7ed-4037-460d-850f-774e309bbb72",
+      "name": "Seed值有无"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.siliconflow.cn/v1/images/generations",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpBearerAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"prompt_enhancement\": false,\n  \"prompt\": \"{{ $('提示词优化').item.json.choices[0].message.content }}\",\n  \"image_size\": \"{{ $ifEmpty($('GET请求').item.json.query.width,1024) }}x{{ $ifEmpty($('GET请求').item.json.query.height,1024) }}\",\n  \"model\": \"Kwai-Kolors/Kolors\",\n  \"seed\": {{ $('GET请求').item.json.query.seed }}\n}",
+        "options": {}
+      },
+      "id": "050eaa39-4e6e-46c1-a71b-edd4da244d92",
+      "name": "图像生成(有seed)",
+      "type": "n8n-nodes-base.httpRequest",
+      "position": [
+        600,
+        200
+      ],
+      "typeVersion": 4.2,
+      "retryOnFail": false,
+      "credentials": {
+        "httpBearerAuth": {
+          "id": "kDSNYisuS6BtbNhR",
+          "name": "Bearer Auth account"
+        }
+      },
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.siliconflow.cn/v1/images/generations",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpBearerAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"prompt_enhancement\": false,\n  \"prompt\": \"{{ $('提示词优化').item.json.choices[0].message.content }}\",\n  \"image_size\": \"{{ $ifEmpty($('GET请求').item.json.query.width,1024) }}x{{ $ifEmpty($('GET请求').item.json.query.height,1024) }}\",\n  \"model\": \"black-forest-labs/FLUX.1-dev\"\n}",
+        "options": {}
+      },
+      "id": "e0e0125f-7437-4274-bc88-f0cdb39a7fca",
+      "name": "图像生成(无seed)",
+      "type": "n8n-nodes-base.httpRequest",
+      "position": [
+        600,
+        400
+      ],
+      "typeVersion": 4.2,
+      "retryOnFail": false,
+      "credentials": {
+        "httpBearerAuth": {
+          "id": "kDSNYisuS6BtbNhR",
+          "name": "Bearer Auth account"
+        }
+      },
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={\n  \"success\": true,\n  \"originalPrompt\": \"{{ $('GET请求').item.json.query.prompt }}\",\n  \"enhancedPrompt\": \"{{ $('提示词优化').item.json.choices[0].message.content }}\",\n  \"imageUrl\": \"{{ $json.images[0].url }}\",\n  \"parameters\": {\n    \"width\": {{ $ifEmpty($('GET请求').item.json.query.width,1024) }},\n    \"height\": {{ $ifEmpty($('GET请求').item.json.query.height,1024) }},\n    \"seed\": {{ $ifEmpty($('GET请求').item.json.query.seed,'null') }},\n    \"model\": \"black-forest-labs/FLUX.1-dev\"\n  }\n}",
+        "options": {}
+      },
+      "id": "8cc40247-48df-4c8f-b96c-92002c0a26a1",
+      "name": "成功响应(有seed)",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        800,
+        200
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={\n  \"success\": true,\n  \"originalPrompt\": \"{{ $('GET请求').item.json.query.prompt }}\",\n  \"enhancedPrompt\": \"{{ $('提示词优化').item.json.choices[0].message.content }}\",\n  \"imageUrl\": \"{{ $json.images[0].url }}\",\n  \"parameters\": {\n    \"width\": {{ $ifEmpty($('GET请求').item.json.query.width,1024) }},\n    \"height\": {{ $ifEmpty($('GET请求').item.json.query.height,1024) }},\n    \"seed\": null,\n    \"model\": \"black-forest-labs/FLUX.1-dev\"\n  }\n}",
+        "options": {}
+      },
+      "id": "6986dbef-8248-4c0a-aabe-3be567d2177a",
+      "name": "成功响应(无seed)",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        800,
+        400
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={\n  \"success\": false,\n  \"error\": \"提示词优化失败：{{ $json.error.message || '未知错误' }}\",\n  \"step\": \"prompt_enhancement\"\n}",
+        "options": {}
+      },
+      "id": "a4d096df-daf4-41fc-8ade-0ec10d3c9ef3",
+      "name": "提示词优化错误",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "position": [
+        400,
+        460
+      ],
+      "typeVersion": 1.1
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={\n  \"success\": false,\n  \"error\": \"图像生成失败：{{ $json.error.message || '未知错误' }}\",\n  \"step\": \"image_generation\",\n  \"enhancedPrompt\": \"{{ $('提示词优化').item.json.choices[0].message.content }}\"\n}",
+        "options": {}
+      },
+      "id": "11088d91-cadb-499b-ad02-3f44da02b9ed",
+      "name": "图像生成错误(有seed)",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "position": [
+        800,
+        100
+      ],
+      "typeVersion": 1.1
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={\n  \"success\": false,\n  \"error\": \"图像生成失败：{{ $json.error.message || '未知错误' }}\",\n  \"step\": \"image_generation\",\n  \"enhancedPrompt\": \"{{ $('提示词优化').item.json.choices[0].message.content }}\"\n}",
+        "options": {}
+      },
+      "id": "de235342-c1fb-4301-a04d-5fc9cb19ab08",
+      "name": "图像生成错误(无seed)",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "position": [
+        800,
+        540
+      ],
+      "typeVersion": 1.1
+    },
+    {
+      "parameters": {
+        "content": "## FLUX 增强版图像生成工作流\n\n功能特性：\n1. 智能提示词优化 - 使用Qwen模型优化用户输入\n2. 专业图像生成 - 使用FLUX.1-dev模型\n3. JSON响应格式 - 便于前端集成\n4. 完整错误处理 - 分步骤错误信息\n\n使用方法：\n- GET /webhook/flux?prompt=描述&width=1024&height=1024&seed=123456\n\n返回格式：\n{\n  \"success\": true/false,\n  \"originalPrompt\": \"原始提示词\",\n  \"enhancedPrompt\": \"优化后提示词\",\n  \"imageUrl\": \"图像URL\",\n  \"parameters\": {...}\n}",
+        "height": 760,
+        "width": 1420,
+        "color": 3
+      },
+      "id": "7c7e3566-875d-45d9-be40-ef7e4b491b15",
+      "name": "说明文档",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -320,
+        -80
+      ]
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "GET请求": {
+      "main": [
+        [
+          {
+            "node": "提示词优化",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "提示词优化": {
+      "main": [
+        [
+          {
+            "node": "Seed值有无",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "提示词优化错误",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Seed值有无": {
+      "main": [
+        [
+          {
+            "node": "图像生成(有seed)",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "图像生成(无seed)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "图像生成(有seed)": {
+      "main": [
+        [
+          {
+            "node": "成功响应(有seed)",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "图像生成错误(有seed)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "图像生成(无seed)": {
+      "main": [
+        [
+          {
+            "node": "成功响应(无seed)",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "图像生成错误(无seed)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "6e01b326-7353-496d-8234-983fe42022ee",
+  "meta": {
+    "instanceId": "bc1e72b18ecd35db31a3eb268126f3db481da9e3e28e16914bfe75fac0fe41c1"
+  },
+  "id": "3hzHxl5jf5AQc7co",
+  "tags": []
+}

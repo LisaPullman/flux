@@ -1,0 +1,999 @@
+{
+  "name": "flux_all",
+  "nodes": [
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "9ec60f33-b940-40a6-9f8a-cb944b7065f1",
+              "name": "stylePrompt",
+              "type": "string",
+              "value": "=rule of thirds, golden ratio, hyper-maximalist, vibrant neon, high-contrast, octane render, photorealism, 8k ::7 --ar 16:9 --s 1000\n\nDesign a fun, energetic scene filled with bold, neon colors, and playful shapes that pop off the screen. The image should evoke a sense of joy and movement, using fluid, organic forms and exaggerated, cartoon-like proportions. Focus on creating a lively atmosphere with contrasting, saturated tones and dynamic lighting. Use a mix of asymmetrical and balanced compositions to create a playful visual flow. Render in 8K with a hyper-maximalist approach using Octane Render for vibrant, high-gloss textures and photorealistic lighting effects. Include:"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "id": "1af37ea0-b66e-43c6-9fd0-44fe33596f9c",
+      "name": "Vivid Pop Explosion",
+      "type": "n8n-nodes-base.set",
+      "position": [
+        0,
+        740
+      ],
+      "notesInFlow": true,
+      "typeVersion": 3.4,
+      "notes": " "
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "9ec60f33-b940-40a6-9f8a-cb944b7065f1",
+              "name": "stylePrompt",
+              "type": "string",
+              "value": "=golden ratio, rule of thirds, cyberpunk, glitch art, octane render, cinematic realism, 8k ::7 --ar 16:9 --s 1000\n\nGenerate a futuristic, cyberpunk dystopia with metallic textures, digital glitches, and neon lights. Blend cold, dystopian structures with traces of organic life. Use photorealistic lighting and dynamic reflections to enhance the visual depth of the scene. Include:"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "id": "bd5e0e16-ac53-42c9-9a83-1150e1e7adef",
+      "name": "AI Dystopia",
+      "type": "n8n-nodes-base.set",
+      "position": [
+        0,
+        380
+      ],
+      "notesInFlow": true,
+      "typeVersion": 3.4,
+      "notes": " "
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "9ec60f33-b940-40a6-9f8a-cb944b7065f1",
+              "name": "stylePrompt",
+              "type": "string",
+              "value": "=asymmetric composition, golden ratio, neon colors, abstract forms, octane render, cinematic realism, unreal engine, 8k ::7 --ar 16:9 --s 1000\nCreate a bold, vivid composition using neon colors and fluid shapes that break away from reality. Focus on abstract forms, blending Fauvism's exaggerated color palette with modern digital art techniques. Use asymmetric composition and dynamic lighting. Render with a vibrant, high-energy aesthetic. Include:"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "id": "5aea7b0b-568e-420c-96b9-44f095e498b1",
+      "name": "Neon Fauvism",
+      "type": "n8n-nodes-base.set",
+      "position": [
+        0,
+        560
+      ],
+      "notesInFlow": true,
+      "typeVersion": 3.4,
+      "notes": " "
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "9ec60f33-b940-40a6-9f8a-cb944b7065f1",
+              "name": "stylePrompt",
+              "type": "string",
+              "value": "=Include: "
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "id": "8c1bb772-1c20-4a8d-a63d-2913a922ba04",
+      "name": "None",
+      "type": "n8n-nodes-base.set",
+      "position": [
+        0,
+        920
+      ],
+      "notesInFlow": true,
+      "typeVersion": 3.4,
+      "notes": " "
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "9ec60f33-b940-40a6-9f8a-cb944b7065f1",
+              "name": "stylePrompt",
+              "type": "string",
+              "value": "=golden ratio, rule of thirds, cyberpunk, glitch art, octane render, cinematic realism, 8k ::7 --ar 16:9 --s 1000\nCreate a hyper-realistic yet surreal landscape that bends reality, incorporating dreamlike elements and exaggerated proportions. Use vibrant, almost neon colors, and focus on a sense of wonder, play, and fantasy. Include:\n"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "id": "3e7bf91a-21b0-4b6a-b8f3-1b562b343cdc",
+      "name": "Hyper-Surreal Escape",
+      "type": "n8n-nodes-base.set",
+      "position": [
+        0,
+        0
+      ],
+      "notesInFlow": true,
+      "typeVersion": 3.4,
+      "notes": " "
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "{\n  \"formSubmittedText\": \"CloudFlare R2存储桶上传图片失败，请检查网络或者节点是否有误\"\n}",
+        "options": {}
+      },
+      "id": "18766e3d-a986-4397-834c-635d0e2af9eb",
+      "name": "回复错误",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "position": [
+        1100,
+        680
+      ],
+      "typeVersion": 1.1
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "9ec60f33-b940-40a6-9f8a-cb944b7065f1",
+              "name": "stylePrompt",
+              "type": "string",
+              "value": "=rule of thirds, asymmetric composition, glitch art, pixelation, VHS noise, octane render, unreal engine, 8k ::7 --ar 16:9 --s 1200\nDesign a glitchy, post-analog world with digital decay and broken visuals. Utilize pixelated elements, VHS noise, and neon glitches to create a fragmented aesthetic. Use bold, contrasting colors against muted backgrounds for a high-contrast, otherworldly feel. The composition should follow asymmetrical rules, focusing on chaotic yet intentional visual balance. Include:"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "id": "e5a8ca32-f8b3-43f3-9093-5f4ad88dbc65",
+      "name": "Post-Analog Glitchscape",
+      "type": "n8n-nodes-base.set",
+      "position": [
+        0,
+        180
+      ],
+      "notesInFlow": true,
+      "typeVersion": 3.4,
+      "notes": " "
+    },
+    {
+      "parameters": {
+        "url": "={{ $('调用 硅基流动 推理 API').item.json.images[0].url }}",
+        "options": {}
+      },
+      "id": "09bad666-c22b-4268-a95b-722e9c60d023",
+      "name": "图片转成二进制文件",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        780,
+        280
+      ],
+      "notesInFlow": true,
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "{\n  \"formSubmittedText\": \"警告！生成的图片疑似含有敏感内容 \"\n}",
+        "options": {}
+      },
+      "id": "f723a0e1-e8ed-44a3-af87-8b64e4234d18",
+      "name": "绘画含有敏感内容",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "position": [
+        800,
+        500
+      ],
+      "typeVersion": 1.1
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "bcc59de6-80ae-4174-bf8f-320844566fe0",
+              "leftValue": "={{ $('调用 硅基流动 推理 API').item.json.images[0].url }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "exists",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "52991dfd-6970-457f-8634-7c49030be22d",
+      "name": "If条件判断",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        540,
+        360
+      ],
+      "retryOnFail": true,
+      "notesInFlow": true,
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.siliconflow.cn/v1/images/generations",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpBearerAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {}
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "model",
+              "value": "Pro/black-forest-labs/FLUX.1-schnell"
+            },
+            {
+              "name": "prompt",
+              "value": "={{ $('生成提示词').item.json.prompt }},style:{{ $json.stylePrompt }}"
+            },
+            {
+              "name": "seed",
+              "value": 20
+            },
+            {
+              "name": "image_size",
+              "value": "={{ $('n8n 表单触发器').item.json['图片比例'] }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "832b1603-f970-40be-8963-21bad6720993",
+      "name": "调用 硅基流动 推理 API",
+      "type": "n8n-nodes-base.httpRequest",
+      "position": [
+        360,
+        420
+      ],
+      "notesInFlow": true,
+      "typeVersion": 4.2,
+      "credentials": {
+        "httpBearerAuth": {
+          "id": "eIOKreIsFPd1CJQy",
+          "name": "Bearer Auth account"
+        }
+      },
+      "onError": "continueErrorOutput",
+      "notes": " "
+    },
+    {
+      "parameters": {
+        "path": "flux",
+        "formTitle": "Flux绘画生成",
+        "formDescription": "教程见LinuxDo",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "Prompt",
+              "fieldType": "textarea",
+              "placeholder": "落日晚霞",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "图片比例",
+              "fieldType": "dropdown",
+              "fieldOptions": {
+                "values": [
+                  {
+                    "option": "1024x1024"
+                  },
+                  {
+                    "option": "768x1024"
+                  },
+                  {
+                    "option": "1024x768"
+                  }
+                ]
+              },
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Style",
+              "fieldType": "dropdown",
+              "fieldOptions": {
+                "values": [
+                  {
+                    "option": "超现实逃逸"
+                  },
+                  {
+                    "option": "霓虹野兽派"
+                  },
+                  {
+                    "option": "后模拟故障景观"
+                  },
+                  {
+                    "option": "AI 反乌托邦"
+                  },
+                  {
+                    "option": "鲜艳流行爆炸"
+                  }
+                ]
+              }
+            },
+            {
+              "fieldLabel": "图生图（上传启用）",
+              "fieldType": "file",
+              "multipleFiles": false,
+              "acceptFileTypes": " .jpg, .png, .webp"
+            }
+          ]
+        },
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "f664101b-bfe2-47a4-8ce2-64c0ddca1013",
+      "name": "n8n 表单触发器",
+      "type": "n8n-nodes-base.formTrigger",
+      "position": [
+        -1340,
+        380
+      ],
+      "webhookId": "a35eb005-f795-4c85-9d00-0fe9797cb509",
+      "typeVersion": 2.1
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-2.5-flash-preview-05-20",
+        "options": {
+          "maxOutputTokens": 8192
+        }
+      },
+      "id": "3b2c7af7-a35b-4c05-9fca-812cedde11bd",
+      "name": "Google Gemini Chat Model",
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        -940,
+        500
+      ],
+      "credentials": {
+        "googlePalmApi": {
+          "id": "7cZVdtAIpYSLpffH",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "bcc59de6-80ae-4174-bf8f-320844566fe0",
+              "leftValue": "={{ $json['图生图（上传启用）'] }}",
+              "rightValue": "否",
+              "operator": {
+                "type": "object",
+                "operation": "notExists",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "e8522e62-4a94-41fd-bf31-074eccc05f1b",
+      "name": "If条件判断2",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        -1180,
+        380
+      ],
+      "retryOnFail": true,
+      "notesInFlow": true,
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-2.5-flash-preview-05-20",
+        "options": {
+          "maxOutputTokens": 8192
+        }
+      },
+      "id": "e860662a-3b1b-452c-9a5a-8874fbb9bbcc",
+      "name": "Google Gemini Chat Model1",
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        -940,
+        780
+      ],
+      "credentials": {
+        "googlePalmApi": {
+          "id": "7cZVdtAIpYSLpffH",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=你是一个基于Flux.1模型的提示词生成机器人。根据用户的需求，自动生成符合Flux.1格式的绘画提示词。虽然你可以参考提供的模板来学习提示词结构和规律，但你必须具备灵活性来应对各种不同需求。最终输出应仅限提示词，无需任何其他解释或信息。你的回答必须全部使用英语进行回复我！\n\n### **提示词生成逻辑**：\n\n1. **需求解析**：从用户的描述中提取关键信息，包括：\n   - 角色：外貌、动作、表情等。\n   - 场景：环境、光线、天气等。\n   - 风格：艺术风格、情感氛围、配色等。\n   - 其他元素：特定物品、背景或特效。\n\n2. **提示词结构规律**：\n   - **简洁、精确且具象**：提示词需要简单、清晰地描述核心对象，并包含足够细节以引导生成出符合需求的图像。\n   - **灵活多样**：参考下列模板和已有示例，但需根据具体需求生成多样化的提示词，避免固定化或过于依赖模板。\n   - **符合Flux.1风格的描述**：提示词必须遵循Flux.1的要求，尽量包含艺术风格、视觉效果、情感氛围的描述，使用与Flux.1模型生成相符的关键词和描述模式。\n\n3. **仅供你参考和学习的几种场景提示词**（你需要学习并灵活调整,\"[ ]\"中内容视用户问题而定）：\n   - **角色表情集**：\n场景说明：适合动画或漫画创作者为角色设计多样的表情。这些提示词可以生成展示同一角色在不同情绪下的表情集，涵盖快乐、悲伤、愤怒等多种情感。\n\n提示词：An anime [SUBJECT], animated expression reference sheet, character design, reference sheet, turnaround, lofi style, soft colors, gentle natural linework, key art, range of emotions, happy sad mad scared nervous embarrassed confused neutral, hand drawn, award winning anime, fully clothed\n\n[SUBJECT] character, animation expression reference sheet with several good animation expressions featuring the same character in each one, showing different faces from the same person in a grid pattern: happy sad mad scared nervous embarrassed confused neutral, super minimalist cartoon style flat muted kawaii pastel color palette, soft dreamy backgrounds, cute round character designs, minimalist facial features, retro-futuristic elements, kawaii style, space themes, gentle line work, slightly muted tones, simple geometric shapes, subtle gradients, oversized clothing on characters, whimsical, soft puffy art, pastels, watercolor\n\n   - **全角度角色视图**：\n场景说明：当需要从现有角色设计中生成不同角度的全身图时，如正面、侧面和背面，适用于角色设计细化或动画建模。\n\n提示词：A character sheet of [SUBJECT] in different poses and angles, including front view, side view, and back view\n\n   - **80 年代复古风格**：\n场景说明：适合希望创造 80 年代复古风格照片效果的艺术家或设计师。这些提示词可以生成带有怀旧感的模糊宝丽来风格照片。\n\n提示词：blurry polaroid of [a simple description of the scene], 1980s.\n\n   - **智能手机内部展示**：\n场景说明：适合需要展示智能手机等产品设计的科技博客作者或产品设计师。这些提示词帮助生成展示手机外观和屏幕内容的图像。\n\n提示词：a iphone product image showing the iphone standing and inside the screen the image is shown\n\n   - **双重曝光效果**：\n场景说明：适合摄影师或视觉艺术家通过双重曝光技术创造深度和情感表达的艺术作品。\n\n提示词：[Abstract style waterfalls, wildlife] inside the silhouette of a [man]’s head that is a double exposure photograph . Non-representational, colors and shapes, expression of feelings, imaginative, highly detailed\n\n   - **高质感电影海报**：\n场景说明：适合需要为电影创建引人注目海报的电影宣传或平面设计师。\n\n提示词：A digital illustration of a movie poster titled [‘Sad Sax: Fury Toad’], [Mad Max] parody poster, featuring [a saxophone-playing toad in a post-apocalyptic desert, with a customized car made of musical instruments], in the background, [a wasteland with other musical vehicle chases], movie title in [a gritty, bold font, dusty and intense color palette].\n\n   - **镜面自拍效果**：\n场景说明：适合想要捕捉日常生活瞬间的摄影师或社交媒体用户。\n\n提示词：Phone photo: A woman stands in front of a mirror, capturing a selfie. The image quality is grainy, with a slight blur softening the details. The lighting is dim, casting shadows that obscure her features. [The room is cluttered, with clothes strewn across the bed and an unmade blanket. Her expression is casual, full of concentration], while the old iPhone struggles to focus, giving the photo an authentic, unpolished feel. The mirror shows smudges and fingerprints, adding to the raw, everyday atmosphere of the scene.\n\n   - **像素艺术创作**：\n场景说明：适合像素艺术爱好者或复古游戏开发者创造或复刻经典像素风格图像。\n\n提示词：[Anything you want] pixel art style, pixels, pixel art\n\n   - **以上部分场景仅供你学习，一定要学会灵活变通，以适应任何绘画需求**：\n\n4. **Flux.1提示词要点总结**：\n   - **简洁精准的主体描述**：明确图像中核心对象的身份或场景。\n   - **风格和情感氛围的具体描述**：确保提示词包含艺术风格、光线、配色、以及图像的氛围等信息。\n   - **动态与细节的补充**：提示词可包括场景中的动作、情绪、或光影效果等重要细节。\n   - **其他更多规律请自己寻找**\n---\n\n**问答案例**：\n**用户输入**：一个80年代复古风格的照片。\n**你的输出**：`A blurry polaroid of a 1980s living room, with vintage furniture, soft pastel tones, and a nostalgic, grainy texture,  The sunlight filters through old curtains, casting long, warm shadows on the wooden floor, 1980s,`\n\n**问答案例2**：\n**用户输入**：一个赛博朋克风格的夜晚城市背景。\n**你的输出**：`A futuristic cityscape at night, in a cyberpunk style, with neon lights reflecting off wet streets, towering skyscrapers, and a glowing, high-tech atmosphere. Dark shadows contrast with vibrant neon signs, creating a dramatic, dystopian mood.`\n\n用户的输入为：{{ $('n8n 表单触发器').item.json.Prompt }}\n\n并结合根据图片生成类似图片内容的提示词：",
+        "messages": {
+          "messageValues": [
+            {
+              "type": "HumanMessagePromptTemplate",
+              "messageType": "imageBinary",
+              "binaryImageDataKey": "_________"
+            }
+          ]
+        }
+      },
+      "id": "1cdabd48-e5d5-42bf-86e0-63a7c443cdf0",
+      "name": "LLM生成提示词1",
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.4,
+      "position": [
+        -960,
+        660
+      ],
+      "retryOnFail": true,
+      "notesInFlow": true,
+      "alwaysOutputData": false
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "{\n  \"formSubmittedText\": \"硅基流动API调用失败，重试或刷新试试 \"\n}",
+        "options": {}
+      },
+      "id": "4a230555-94d2-4a85-b79b-3ab8368f2958",
+      "name": "回复错误1",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "position": [
+        580,
+        640
+      ],
+      "typeVersion": 1.1
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=你是一个基于Flux.1模型的提示词生成机器人。根据用户的需求，自动生成符合Flux.1格式的绘画提示词。虽然你可以参考提供的模板来学习提示词结构和规律，但你必须具备灵活性来应对各种不同需求。最终输出应仅限提示词，无需任何其他解释或信息。你的回答必须全部使用英语进行回复我！\n\n### **提示词生成逻辑**：\n\n1. **需求解析**：从用户的描述中提取关键信息，包括：\n   - 角色：外貌、动作、表情等。\n   - 场景：环境、光线、天气等。\n   - 风格：艺术风格、情感氛围、配色等。\n   - 其他元素：特定物品、背景或特效。\n\n2. **提示词结构规律**：\n   - **简洁、精确且具象**：提示词需要简单、清晰地描述核心对象，并包含足够细节以引导生成出符合需求的图像。\n   - **灵活多样**：参考下列模板和已有示例，但需根据具体需求生成多样化的提示词，避免固定化或过于依赖模板。\n   - **符合Flux.1风格的描述**：提示词必须遵循Flux.1的要求，尽量包含艺术风格、视觉效果、情感氛围的描述，使用与Flux.1模型生成相符的关键词和描述模式。\n\n3. **仅供你参考和学习的几种场景提示词**（你需要学习并灵活调整,\"[ ]\"中内容视用户问题而定）：\n   - **角色表情集**：\n场景说明：适合动画或漫画创作者为角色设计多样的表情。这些提示词可以生成展示同一角色在不同情绪下的表情集，涵盖快乐、悲伤、愤怒等多种情感。\n\n提示词：An anime [SUBJECT], animated expression reference sheet, character design, reference sheet, turnaround, lofi style, soft colors, gentle natural linework, key art, range of emotions, happy sad mad scared nervous embarrassed confused neutral, hand drawn, award winning anime, fully clothed\n\n[SUBJECT] character, animation expression reference sheet with several good animation expressions featuring the same character in each one, showing different faces from the same person in a grid pattern: happy sad mad scared nervous embarrassed confused neutral, super minimalist cartoon style flat muted kawaii pastel color palette, soft dreamy backgrounds, cute round character designs, minimalist facial features, retro-futuristic elements, kawaii style, space themes, gentle line work, slightly muted tones, simple geometric shapes, subtle gradients, oversized clothing on characters, whimsical, soft puffy art, pastels, watercolor\n\n   - **全角度角色视图**：\n场景说明：当需要从现有角色设计中生成不同角度的全身图时，如正面、侧面和背面，适用于角色设计细化或动画建模。\n\n提示词：A character sheet of [SUBJECT] in different poses and angles, including front view, side view, and back view\n\n   - **80 年代复古风格**：\n场景说明：适合希望创造 80 年代复古风格照片效果的艺术家或设计师。这些提示词可以生成带有怀旧感的模糊宝丽来风格照片。\n\n提示词：blurry polaroid of [a simple description of the scene], 1980s.\n\n   - **智能手机内部展示**：\n场景说明：适合需要展示智能手机等产品设计的科技博客作者或产品设计师。这些提示词帮助生成展示手机外观和屏幕内容的图像。\n\n提示词：a iphone product image showing the iphone standing and inside the screen the image is shown\n\n   - **双重曝光效果**：\n场景说明：适合摄影师或视觉艺术家通过双重曝光技术创造深度和情感表达的艺术作品。\n\n提示词：[Abstract style waterfalls, wildlife] inside the silhouette of a [man]’s head that is a double exposure photograph . Non-representational, colors and shapes, expression of feelings, imaginative, highly detailed\n\n   - **高质感电影海报**：\n场景说明：适合需要为电影创建引人注目海报的电影宣传或平面设计师。\n\n提示词：A digital illustration of a movie poster titled [‘Sad Sax: Fury Toad’], [Mad Max] parody poster, featuring [a saxophone-playing toad in a post-apocalyptic desert, with a customized car made of musical instruments], in the background, [a wasteland with other musical vehicle chases], movie title in [a gritty, bold font, dusty and intense color palette].\n\n   - **镜面自拍效果**：\n场景说明：适合想要捕捉日常生活瞬间的摄影师或社交媒体用户。\n\n提示词：Phone photo: A woman stands in front of a mirror, capturing a selfie. The image quality is grainy, with a slight blur softening the details. The lighting is dim, casting shadows that obscure her features. [The room is cluttered, with clothes strewn across the bed and an unmade blanket. Her expression is casual, full of concentration], while the old iPhone struggles to focus, giving the photo an authentic, unpolished feel. The mirror shows smudges and fingerprints, adding to the raw, everyday atmosphere of the scene.\n\n   - **像素艺术创作**：\n场景说明：适合像素艺术爱好者或复古游戏开发者创造或复刻经典像素风格图像。\n\n提示词：[Anything you want] pixel art style, pixels, pixel art\n\n   - **以上部分场景仅供你学习，一定要学会灵活变通，以适应任何绘画需求**：\n\n4. **Flux.1提示词要点总结**：\n   - **简洁精准的主体描述**：明确图像中核心对象的身份或场景。\n   - **风格和情感氛围的具体描述**：确保提示词包含艺术风格、光线、配色、以及图像的氛围等信息。\n   - **动态与细节的补充**：提示词可包括场景中的动作、情绪、或光影效果等重要细节。\n   - **其他更多规律请自己寻找**\n---\n\n**问答案例**：\n**用户输入**：一个80年代复古风格的照片。\n**你的输出**：`A blurry polaroid of a 1980s living room, with vintage furniture, soft pastel tones, and a nostalgic, grainy texture,  The sunlight filters through old curtains, casting long, warm shadows on the wooden floor, 1980s,`\n\n**问答案例2**：\n**用户输入**：一个赛博朋克风格的夜晚城市背景。\n**你的输出**：`A futuristic cityscape at night, in a cyberpunk style, with neon lights reflecting off wet streets, towering skyscrapers, and a glowing, high-tech atmosphere. Dark shadows contrast with vibrant neon signs, creating a dramatic, dystopian mood.`\n\n用户的输入为：{{ $('n8n 表单触发器').item.json.Prompt }}\n\n"
+      },
+      "id": "479c80db-eb27-4581-b30f-fb187194195c",
+      "name": "LLM生成提示词",
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.4,
+      "position": [
+        -960,
+        360
+      ],
+      "retryOnFail": true,
+      "notesInFlow": true,
+      "alwaysOutputData": false
+    },
+    {
+      "parameters": {
+        "operation": "upload",
+        "bucketName": "n8n",
+        "fileName": "=fg-{{ $execution.id }}.jpg",
+        "additionalFields": {}
+      },
+      "id": "7726d613-6575-495f-af5b-1b43c10975c4",
+      "name": "将图片上传到 R2",
+      "type": "n8n-nodes-base.s3",
+      "position": [
+        980,
+        280
+      ],
+      "typeVersion": 1,
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "respondWith": "text",
+        "responseBody": "=<!DOCTYPE html>\n<html lang=\"zh-CN\">\n<head>\n    <meta charset=\"UTF-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n    <title>Flux 图片生成结果</title>\n    <style>\n        body {\n            font-family: 'Open Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;\n            display: flex;\n            flex-direction: column;\n            align-items: center;\n            justify-content: flex-start;\n            min-height: 100vh;\n            background-color: #121212;\n            color: #e0e0e0;\n            margin: 0;\n            padding: 20px;\n        }\n\n        .container {\n            width: 90%;\n            max-width: 800px;\n            text-align: center;\n            background: linear-gradient(145deg, #1e1e1e, #242424);\n            padding: 32px;\n            border-radius: 16px;\n            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);\n            margin-bottom: 32px;\n        }\n\n        .image-container {\n            margin-bottom: 24px;\n        }\n\n        .image-container img {\n            max-width: 100%;\n            height: auto;\n            border-radius: 12px;\n            border: 2px solid #333;\n            transition: transform 0.3s ease, box-shadow 0.3s ease;\n        }\n\n        .image-container img:hover {\n            transform: scale(1.02);\n            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.5);\n        }\n\n        .style-text {\n            font-size: 18px;\n            margin: 24px 0;\n            color: #bbb;\n            padding: 12px;\n            background: rgba(255, 255, 255, 0.05);\n            border-radius: 8px;\n        }\n\n        .cta {\n            display: inline-block;\n            width: auto;\n            min-width: 200px;\n            margin: 20px 0 0;\n            padding: 16px 32px;\n            border: none;\n            border-radius: 8px;\n            text-decoration: none;\n            color: #fff;\n            background: linear-gradient(135deg, #1C9985, #20B69E);\n            font-size: 18px;\n            font-weight: 500;\n            cursor: pointer;\n            transition: all 0.3s ease;\n        }\n\n        .cta:hover {\n            background: linear-gradient(135deg, #20B69E, #25D4B8);\n            transform: translateY(-2px);\n            box-shadow: 0 8px 16px rgba(28, 153, 133, 0.3);\n        }\n\n        .recent-renders {\n            width: 90%;\n            max-width: 800px;\n            display: grid;\n            grid-template-columns: repeat(2, 1fr);\n            gap: 24px;\n            margin-top: 32px;\n        }\n\n        .recent-render {\n            background-color: #2c2c2c;\n            padding: 16px;\n            border-radius: 12px;\n            transition: transform 0.3s ease, box-shadow 0.3s ease;\n        }\n\n        .recent-render:hover {\n            transform: translateY(-4px);\n            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);\n        }\n\n        .recent-render img {\n            width: 100%;\n            height: auto;\n            border-radius: 8px;\n            border: 2px solid #333;\n            transition: transform 0.3s ease;\n        }\n\n        /* 隐藏额外的图片 */\n        .recent-render:nth-child(n+5) {\n            display: none;\n        }\n\n        /* 显示更多按钮样式 */\n        .show-more-label {\n            display: inline-block;\n            width: 90%;\n            max-width: 800px;\n            margin: 32px auto;\n            padding: 16px;\n            background: #2c2c2c;\n            color: #fff;\n            border: none;\n            border-radius: 8px;\n            font-size: 16px;\n            cursor: pointer;\n            transition: all 0.3s ease;\n            text-align: center;\n        }\n\n        .show-more-label:hover {\n            background: #333;\n            transform: translateY(-2px);\n        }\n\n        /* 隐藏复选框 */\n        #show-more {\n            display: none;\n        }\n\n        /* 当复选框被选中时显示额外的图片 */\n        #show-more:checked ~ .recent-renders .recent-render:nth-child(n+5) {\n            display: block;\n        }\n\n        /* 当复选框被选中时隐藏显示更多按钮 */\n        #show-more:checked ~ .show-more-label {\n            display: none;\n        }\n\n        @media (max-width: 768px) {\n            .recent-renders {\n                grid-template-columns: 1fr;\n            }\n            \n            .container {\n                padding: 20px;\n            }\n        }\n    </style>\n</head>\n<body>\n    <div class=\"container\">\n        <div class=\"image-container\">\n            <img src=\"https://pub-42bef849947f470bac59540ae0bf939a.r2.dev/fg-{{ $execution.id }}.jpg\" alt=\"生成的图片\" />\n        </div>\n        <div class=\"style-text\">图片风格: {{ $('n8n 表单触发器').item.json.Style }}</div>\n        <a href=\"https://linux.do/u/yuyu0.0/activity/topics\" class=\"cta\">查看中文教程</a>\n    </div>\n\n    <!-- 添加隐藏的复选框 -->\n    <input type=\"checkbox\" id=\"show-more\">\n\n    <div class=\"recent-renders\">\n        <div class=\"recent-render\">\n            <img src=\"https://pub-42bef849947f470bac59540ae0bf939a.r2.dev/fg-{{ $execution.id.toNumber() - 1 }}.jpg\" alt=\"最近渲染 1\">\n        </div>\n        <div class=\"recent-render\">\n            <img src=\"https://pub-42bef849947f470bac59540ae0bf939a.r2.dev/fg-{{ $execution.id.toNumber() - 2 }}.jpg\" alt=\"最近渲染 2\">\n        </div>\n        <div class=\"recent-render\">\n            <img src=\"https://pub-42bef849947f470bac59540ae0bf939a.r2.dev/fg-{{ $execution.id.toNumber() - 3 }}.jpg\" alt=\"最近渲染 3\">\n        </div>\n        <div class=\"recent-render\">\n            <img src=\"https://pub-42bef849947f470bac59540ae0bf939a.r2.dev/fg-{{ $execution.id.toNumber() - 4 }}.jpg\" alt=\"最近渲染 4\">\n        </div>\n        <div class=\"recent-render\">\n            <img src=\"https://pub-42bef849947f470bac59540ae0bf939a.r2.dev/fg-{{ $execution.id.toNumber() - 5 }}.jpg\" alt=\"最近渲染 5\">\n        </div>\n        <div class=\"recent-render\">\n            <img src=\"https://pub-42bef849947f470bac59540ae0bf939a.r2.dev/fg-{{ $execution.id.toNumber() - 6 }}.jpg\" alt=\"最近渲染 6\">\n        </div>\n        <div class=\"recent-render\">\n            <img src=\"https://pub-42bef849947f470bac59540ae0bf939a.r2.dev/fg-{{ $execution.id.toNumber() - 7 }}.jpg\" alt=\"最近渲染 7\">\n        </div>\n        <div class=\"recent-render\">\n            <img src=\"https://pub-42bef849947f470bac59540ae0bf939a.r2.dev/fg-{{ $execution.id.toNumber() - 8 }}.jpg\" alt=\"最近渲染 8\">\n        </div>\n        <div class=\"recent-render\">\n            <img src=\"https://pub-42bef849947f470bac59540ae0bf939a.r2.dev/fg-{{ $execution.id.toNumber() - 9 }}.jpg\" alt=\"最近渲染 9\">\n        </div>\n        <div class=\"recent-render\">\n            <img src=\"https://pub-42bef849947f470bac59540ae0bf939a.r2.dev/fg-{{ $execution.id.toNumber() - 10 }}.jpg\" alt=\"最近渲染 10\">\n        </div>\n        <div class=\"recent-render\">\n            <img src=\"https://pub-42bef849947f470bac59540ae0bf939a.r2.dev/fg-{{ $execution.id.toNumber() - 11 }}.jpg\" alt=\"最近渲染 11\">\n        </div>\n        <div class=\"recent-render\">\n            <img src=\"https://pub-42bef849947f470bac59540ae0bf939a.r2.dev/fg-{{ $execution.id.toNumber() - 12 }}.jpg\" alt=\"最近渲染 12\">\n        </div>\n    </div>\n\n    <!-- 显示更多按钮标签 -->\n    <label for=\"show-more\" class=\"show-more-label\">显示更多</label>\n</body>\n</html>",
+        "options": {}
+      },
+      "id": "98360624-a5c6-4e52-bd25-7a5ad8c9f50d",
+      "name": "提供结果网页",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "position": [
+        1160,
+        280
+      ],
+      "typeVersion": 1.1
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 1
+                },
+                "conditions": [
+                  {
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "leftValue": "={{ $('n8n 表单触发器').item.json.Style }}",
+                    "rightValue": "超现实逃逸"
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Hyper-Surreal Escape"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 1
+                },
+                "conditions": [
+                  {
+                    "id": "106969fa-994c-4b1e-b693-fc0b48ce5f3d",
+                    "operator": {
+                      "name": "filter.operator.equals",
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "leftValue": "={{ $('n8n 表单触发器').item.json.Style }}",
+                    "rightValue": "后模拟故障景观"
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Post-Analog Glitchscape"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 1
+                },
+                "conditions": [
+                  {
+                    "id": "24318e7d-4dc1-4369-b045-bb7d0a484def",
+                    "operator": {
+                      "name": "filter.operator.equals",
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "leftValue": "={{ $('n8n 表单触发器').item.json.Style }}",
+                    "rightValue": "AI 反乌托邦"
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "AI Dystopia"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 1
+                },
+                "conditions": [
+                  {
+                    "id": "a80911ff-67fc-416d-b135-0401c336d6d8",
+                    "operator": {
+                      "name": "filter.operator.equals",
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "leftValue": "={{ $('n8n 表单触发器').item.json.Style }}",
+                    "rightValue": "霓虹野兽派"
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Neon Fauvism"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 1
+                },
+                "conditions": [
+                  {
+                    "id": "7fdeec28-194e-415e-8da2-8bac90e4c011",
+                    "operator": {
+                      "name": "filter.operator.equals",
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "leftValue": "={{ $('n8n 表单触发器').item.json.Style }}",
+                    "rightValue": "鲜艳流行爆炸"
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Vivid Pop Explosion"
+            }
+          ]
+        },
+        "options": {
+          "fallbackOutput": "extra"
+        }
+      },
+      "id": "8e6fb586-c998-46e1-8d0a-2c87c61d018a",
+      "name": "按风格路线",
+      "type": "n8n-nodes-base.switch",
+      "position": [
+        -380,
+        400
+      ],
+      "typeVersion": 3.1,
+      "notesInFlow": true
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "457eff4f-c9a9-4698-994b-9cdfb04f46f0",
+              "name": "prompt",
+              "value": "={{ $json.text }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "485d167e-ded1-48b5-918b-9d31b09992fa",
+      "name": "生成提示词",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -580,
+        400
+      ],
+      "notesInFlow": true,
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "content": "## 如你部署出现报错，请点击上方“Executions”查看报错信息\n教程见：https://linux.do/t/topic/240907",
+        "height": 232.12815741287443
+      },
+      "id": "b898efdb-c7b2-4e54-bdc5-b9630dd02bed",
+      "name": "Sticky Note",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -520,
+        100
+      ]
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "None": {
+      "main": [
+        [
+          {
+            "node": "调用 硅基流动 推理 API",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Dystopia": {
+      "main": [
+        [
+          {
+            "node": "调用 硅基流动 推理 API",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Neon Fauvism": {
+      "main": [
+        [
+          {
+            "node": "调用 硅基流动 推理 API",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Vivid Pop Explosion": {
+      "main": [
+        [
+          {
+            "node": "调用 硅基流动 推理 API",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Hyper-Surreal Escape": {
+      "main": [
+        [
+          {
+            "node": "调用 硅基流动 推理 API",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Post-Analog Glitchscape": {
+      "main": [
+        [
+          {
+            "node": "调用 硅基流动 推理 API",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "图片转成二进制文件": {
+      "main": [
+        [
+          {
+            "node": "将图片上传到 R2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If条件判断": {
+      "main": [
+        [
+          {
+            "node": "图片转成二进制文件",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "绘画含有敏感内容",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "调用 硅基流动 推理 API": {
+      "main": [
+        [
+          {
+            "node": "If条件判断",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "回复错误1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "n8n 表单触发器": {
+      "main": [
+        [
+          {
+            "node": "If条件判断2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "LLM生成提示词",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If条件判断2": {
+      "main": [
+        [
+          {
+            "node": "LLM生成提示词",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "LLM生成提示词1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model1": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "LLM生成提示词1",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "LLM生成提示词1": {
+      "main": [
+        [
+          {
+            "node": "生成提示词",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "LLM生成提示词": {
+      "main": [
+        [
+          {
+            "node": "生成提示词",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "将图片上传到 R2": {
+      "main": [
+        [
+          {
+            "node": "提供结果网页",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "回复错误",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "按风格路线": {
+      "main": [
+        [
+          {
+            "node": "Hyper-Surreal Escape",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Post-Analog Glitchscape",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "AI Dystopia",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Neon Fauvism",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Vivid Pop Explosion",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "None",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "生成提示词": {
+      "main": [
+        [
+          {
+            "node": "按风格路线",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "f70dc2d1-8e7c-4c54-a4a4-50c9fb811574",
+  "meta": {
+    "instanceId": "e11d00c2718992a58214a52e1f2f24c680abf6d1e56d9580c9a7fb8d725c63d8"
+  },
+  "id": "H7fd63MMXn0L2n0w",
+  "tags": []
+}

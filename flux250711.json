@@ -86,7 +86,7 @@
         "genericAuthType": "httpBearerAuth",
         "sendBody": true,
         "specifyBody": "json",
-        "jsonBody": "={\n  \"prompt_enhancement\": false,\n  \"prompt\": \"{{ $('提示词优化').item.json.choices[0].message.content }}\",\n  \"image_size\": \"{{ $ifEmpty($('GET请求').item.json.query.width,1024) }}x{{ $ifEmpty($('GET请求').item.json.query.height,1024) }}\",\n  \"model\": \"Kwai-Kolors/Kolors\",\n  \"seed\": {{ $('GET请求').item.json.query.seed }}\n}",
+        "jsonBody": "={\n  \"prompt_enhancement\": false,\n  \"prompt\": \"{{ $('提示词优化').item.json.choices[0].message.content }}\",\n  \"image_size\": \"{{ $ifEmpty($('GET请求').item.json.query.width, 1024) }}x{{ $ifEmpty($('GET请求').item.json.query.height, 1024) }}\",\n  \"model\": \"Kwai-Kolors/Kolors\",\n  \"seed\": {{ $('GET请求').item.json.query.seed }}\n}",
         "options": {}
       },
       "id": "050eaa39-4e6e-46c1-a71b-edd4da244d92",
@@ -114,7 +114,7 @@
         "genericAuthType": "httpBearerAuth",
         "sendBody": true,
         "specifyBody": "json",
-        "jsonBody": "={\n  \"prompt_enhancement\": false,\n  \"prompt\": \"{{ $('提示词优化').item.json.choices[0].message.content }}\",\n  \"image_size\": \"{{ $ifEmpty($('GET请求').item.json.query.width,1024) }}x{{ $ifEmpty($('GET请求').item.json.query.height,1024) }}\",\n  \"model\": \"black-forest-labs/FLUX.1-dev\"\n}",
+        "jsonBody": "={\n  \"prompt_enhancement\": false,\n  \"prompt\": \"{{ $('提示词优化').item.json.choices[0].message.content }}\",\n  \"image_size\": \"{{ $ifEmpty($('GET请求').item.json.query.width, 1024) }}x{{ $ifEmpty($('GET请求').item.json.query.height, 1024) }}\",\n  \"model\": \"black-forest-labs/FLUX.1-dev\"\n}",
         "options": {}
       },
       "id": "e0e0125f-7437-4274-bc88-f0cdb39a7fca",
@@ -137,7 +137,7 @@
     {
       "parameters": {
         "respondWith": "json",
-        "responseBody": "={\n  \"success\": true,\n  \"originalPrompt\": \"{{ $('GET请求').item.json.query.prompt }}\",\n  \"enhancedPrompt\": \"{{ $('提示词优化').item.json.choices[0].message.content }}\",\n  \"imageUrl\": \"{{ $json.images[0].url }}\",\n  \"parameters\": {\n    \"width\": {{ $ifEmpty($('GET请求').item.json.query.width,1024) }},\n    \"height\": {{ $ifEmpty($('GET请求').item.json.query.height,1024) }},\n    \"seed\": {{ $ifEmpty($('GET请求').item.json.query.seed,'null') }},\n    \"model\": \"black-forest-labs/FLUX.1-dev\"\n  }\n}",
+        "responseBody": "={\n  \"success\": true,\n  \"originalPrompt\": \"{{ $('GET请求').item.json.query.prompt }}\",\n  \"enhancedPrompt\": \"{{ $('提示词优化').item.json.choices[0].message.content }}\",\n  \"imageUrl\": \"{{ $json.images[0].url }}\",\n  \"parameters\": {\n    \"width\": {{ $ifEmpty($('GET请求').item.json.query.width, 1024) }},\n    \"height\": {{ $ifEmpty($('GET请求').item.json.query.height, 1024) }},\n    \"seed\": {{ $('GET请求').item.json.query.seed || null }},\n    \"model\": \"Kwai-Kolors/Kolors\"\n  }\n}",
         "options": {}
       },
       "id": "8cc40247-48df-4c8f-b96c-92002c0a26a1",
@@ -152,7 +152,7 @@
     {
       "parameters": {
         "respondWith": "json",
-        "responseBody": "={\n  \"success\": true,\n  \"originalPrompt\": \"{{ $('GET请求').item.json.query.prompt }}\",\n  \"enhancedPrompt\": \"{{ $('提示词优化').item.json.choices[0].message.content }}\",\n  \"imageUrl\": \"{{ $json.images[0].url }}\",\n  \"parameters\": {\n    \"width\": {{ $ifEmpty($('GET请求').item.json.query.width,1024) }},\n    \"height\": {{ $ifEmpty($('GET请求').item.json.query.height,1024) }},\n    \"seed\": null,\n    \"model\": \"black-forest-labs/FLUX.1-dev\"\n  }\n}",
+        "responseBody": "={\n  \"success\": true,\n  \"originalPrompt\": \"{{ $('GET请求').item.json.query.prompt }}\",\n  \"enhancedPrompt\": \"{{ $('提示词优化').item.json.choices[0].message.content }}\",\n  \"imageUrl\": \"{{ $json.images[0].url }}\",\n  \"parameters\": {\n    \"width\": {{ $ifEmpty($('GET请求').item.json.query.width, 1024) }},\n    \"height\": {{ $ifEmpty($('GET请求').item.json.query.height, 1024) }},\n    \"seed\": null,\n    \"model\": \"black-forest-labs/FLUX.1-dev\"\n  }\n}",
         "options": {}
       },
       "id": "6986dbef-8248-4c0a-aabe-3be567d2177a",
@@ -211,8 +211,8 @@
     },
     {
       "parameters": {
-        "content": "## FLUX 增强版图像生成工作流\n\n功能特性：\n1. 智能提示词优化 - 使用Qwen模型优化用户输入\n2. 专业图像生成 - 使用FLUX.1-dev模型\n3. JSON响应格式 - 便于前端集成\n4. 完整错误处理 - 分步骤错误信息\n\n使用方法：\n- GET /webhook/flux?prompt=描述&width=1024&height=1024&seed=123456\n\n返回格式：\n{\n  \"success\": true/false,\n  \"originalPrompt\": \"原始提示词\",\n  \"enhancedPrompt\": \"优化后提示词\",\n  \"imageUrl\": \"图像URL\",\n  \"parameters\": {...}\n}",
-        "height": 760,
+        "content": "## FLUX 增强版图像生成工作流 (v1.102.1兼容)\n\n功能特性：\n1. 智能提示词优化 - 使用Qwen模型优化用户输入\n2. 专业图像生成 - 使用FLUX.1-dev模型\n3. JSON响应格式 - 便于前端集成\n4. 完整错误处理 - 分步骤错误信息\n5. 版本兼容性 - 支持n8n 1.102.1\n\n使用方法：\n- GET /webhook/flux?prompt=描述&width=1024&height=1024&seed=123456\n\n返回格式：\n{\n  \"success\": true/false,\n  \"originalPrompt\": \"原始提示词\",\n  \"enhancedPrompt\": \"优化后提示词\",\n  \"imageUrl\": \"图像URL\",\n  \"parameters\": {...}\n}\n\n更新说明：\n- 更新所有节点到最新版本\n- 修复表达式语法兼容性\n- 优化错误处理机制",
+        "height": 840,
         "width": 1420,
         "color": 3
       },

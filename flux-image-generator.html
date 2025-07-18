@@ -840,11 +840,12 @@
     </div>
 
     <script>
-        // 配置 - 已配置为您的服务器地址
+        // 配置 - 已配置为您的服务器地址（优先使用新服务器，备用旧服务器）
         const API_ENDPOINTS = [
-            'http://35.212.175.4:5678/webhook/flux',
-            'http://35.212.175.4:5678/webhook/a5a9106f-2389-4b29-8423-8c0d94717ed2',
-            'http://35.212.175.4:5678/webhook-test/flux'
+            'http://49.51.72.37:5678/workflow/lskCjTsoomNhqBjq',  // 新服务器 - 优先使用
+            'http://35.212.175.4:5678/webhook/flux',              // 旧服务器备用1
+            'http://35.212.175.4:5678/webhook/a5a9106f-2389-4b29-8423-8c0d94717ed2', // 旧服务器备用2
+            'http://35.212.175.4:5678/webhook-test/flux'          // 旧服务器备用3
         ];
         let API_BASE_URL = API_ENDPOINTS[0]; // 默认使用第一个
         

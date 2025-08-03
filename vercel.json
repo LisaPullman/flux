@@ -1,20 +1,10 @@
 {
   "version": 2,
   "name": "foxai-flux",
-  "builds": [
+  "rewrites": [
     {
-      "src": "index.html",
-      "use": "@vercel/static"
-    }
-  ],
-  "routes": [
-    {
-      "src": "/",
-      "dest": "/index.html"
-    },
-    {
-      "src": "/test",
-      "dest": "/test_api_config.html"
+      "source": "/test",
+      "destination": "/test_api_config.html"
     }
   ],
   "headers": [

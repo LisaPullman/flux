@@ -44,7 +44,7 @@
         
         <div class="info">
             <strong>当前配置的服务器:</strong><br>
-            <code id="apiUrl">http://49.51.72.37/webhook/flux</code>
+            <code id="apiUrl">http://49.51.72.37:5678/webhook/flux</code>
         </div>
         
         <button onclick="testConnection()">测试服务器连接</button>
@@ -53,7 +53,7 @@
     </div>
 
     <script>
-        const API_URL = 'http://49.51.72.37/webhook/flux';
+        const API_URL = 'http://49.51.72.37:5678/webhook/flux';
         
         async function testConnection() {
             const resultDiv = document.getElementById('result');

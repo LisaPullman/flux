@@ -849,9 +849,9 @@
     </div>
 
     <script>
-        // 配置 - FOXAI 服务器地址
+        // 配置 - FOXAI 服务器地址（使用n8n默认端口）
         const API_ENDPOINTS = [
-            'http://49.51.72.37/webhook/flux'  // FOXAI 服务器
+            'http://49.51.72.37:5678/webhook/flux'  // FOXAI 服务器 - n8n端口
         ];
         let API_BASE_URL = API_ENDPOINTS[0]; // 使用指定服务器
         

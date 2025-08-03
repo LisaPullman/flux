@@ -58,28 +58,66 @@
         async function testConnection() {
             const resultDiv = document.getElementById('result');
             resultDiv.innerHTML = '<div class="info">🔄 正在测试连接...</div>';
-            
+
+            // 检查当前页面协议
+            const currentProtocol = window.location.protocol;
+            const apiProtocol = API_URL.startsWith('https') ? 'https:' : 'http:';
+
+            if (currentProtocol === 'https:' && apiProtocol === 'http:') {
+                resultDiv.innerHTML = '<div class="error">⚠️ 混合内容警告：<br>当前页面使用HTTPS，但API使用HTTP<br>浏览器可能阻止此请求<br><br>解决方案：<br>1. 在浏览器地址栏点击🔒图标<br>2. 允许"不安全内容"<br>3. 或者将API升级为HTTPS</div>';
+                return;
+            }
+
             try {
-                const response = await fetch(`${API_URL}?prompt=test`, {
+                const testParams = new URLSearchParams({
+                    prompt: 'test connection',
+                    width: '512',
+                    height: '512',
+                    seed: '12345'
+                });
+
+                const response = await fetch(`${API_URL}?${testParams.toString()}`, {
                     method: 'GET',
                     headers: {
                         'Accept': 'application/json',
                     }
                 });
-                
+
                 if (response.ok) {
-                    resultDiv.innerHTML = '<div class="success">✅ 服务器连接成功！状态码: ' + response.status + '</div>';
+                    const data = await response.json();
+                    if (data.success) {
+                        resultDiv.innerHTML = '<div class="success">✅ API连接成功！<br>状态码: ' + response.status + '<br>响应: 图像生成正常<br>增强提示词: ' + (data.enhancedPrompt ? data.enhancedPrompt.substring(0, 100) + '...' : '无') + '</div>';
+                    } else {
+                        resultDiv.innerHTML = '<div class="success">✅ API连接成功，但生成失败<br>状态码: ' + response.status + '<br>错误: ' + (data.error || '未知错误') + '</div>';
+                    }
                 } else if (response.status === 400 || response.status === 500) {
-                    resultDiv.innerHTML = '<div class="success">✅ 服务器在线（返回错误是正常的，因为这是测试请求）状态码: ' + response.status + '</div>';
+                    resultDiv.innerHTML = '<div class="success">✅ 服务器在线（返回错误是正常的，因为这是测试请求）<br>状态码: ' + response.status + '</div>';
                 } else {
-                    resultDiv.innerHTML = '<div class="error">❌ 服务器响应异常，状态码: ' + response.status + '</div>';
+                    resultDiv.innerHTML = '<div class="error">❌ 服务器响应异常<br>状态码: ' + response.status + '</div>';
                 }
             } catch (error) {
+                console.error('API测试错误:', error);
+
+                let errorMsg = '<div class="error">❌ 连接失败<br><br>';
+
                 if (error.name === 'TypeError' && error.message.includes('fetch')) {
-                    resultDiv.innerHTML = '<div class="error">❌ 无法连接到服务器，可能的原因：<br>1. 服务器未运行<br>2. 网络连接问题<br>3. CORS跨域限制<br>4. 防火墙阻止</div>';
+                    errorMsg += '<strong>网络连接错误</strong><br>';
+                    errorMsg += '可能的原因：<br>';
+                    errorMsg += '1. 🌐 网络连接问题<br>';
+                    errorMsg += '2. 🔒 CORS跨域限制<br>';
+                    errorMsg += '3. 🛡️ 防火墙阻止<br>';
+                    errorMsg += '4. 📡 服务器未运行<br>';
+                    errorMsg += '5. ⚠️ 混合内容限制 (HTTPS→HTTP)<br><br>';
+                    errorMsg += '<strong>建议解决方案：</strong><br>';
+                    errorMsg += '• 检查网络连接<br>';
+                    errorMsg += '• 允许浏览器不安全内容<br>';
+                    errorMsg += '• 联系服务器管理员<br>';
                 } else {
-                    resultDiv.innerHTML = '<div class="error">❌ 连接错误: ' + error.message + '</div>';
+                    errorMsg += '<strong>错误详情:</strong> ' + error.message + '<br>';
                 }
+
+                errorMsg += '</div>';
+                resultDiv.innerHTML = errorMsg;
             }
         }
         

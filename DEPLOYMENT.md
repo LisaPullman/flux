@@ -15,11 +15,20 @@
 
 ### 🔧 配置信息
 
-**API端点**: `http://49.51.72.37/webhook/flux`
+**API端点**:
+- 主要: `/api/flux` (Vercel代理，推荐)
+- 备用: `http://49.51.72.37:5678/webhook/flux` (直连)
 
 **访问路径**:
-- 主应用: `/` 
+- 主应用: `/`
 - API测试: `/test`
+
+### 🛡️ CORS解决方案
+
+项目包含Vercel Serverless Function代理，自动解决：
+- ✅ CORS跨域问题
+- ✅ HTTPS/HTTP混合内容问题
+- ✅ 浏览器安全限制
 
 ### 🌐 部署后访问
 

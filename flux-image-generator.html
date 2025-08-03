@@ -840,14 +840,11 @@
     </div>
 
     <script>
-        // 配置 - 已配置为您的服务器地址（优先使用新服务器，备用旧服务器）
+        // 配置 - FOXAI 服务器地址
         const API_ENDPOINTS = [
-            'http://49.51.72.37:5678/workflow/lskCjTsoomNhqBjq',  // 新服务器 - 优先使用
-            'http://35.212.175.4:5678/webhook/flux',              // 旧服务器备用1
-            'http://35.212.175.4:5678/webhook/a5a9106f-2389-4b29-8423-8c0d94717ed2', // 旧服务器备用2
-            'http://35.212.175.4:5678/webhook-test/flux'          // 旧服务器备用3
+            'http://49.51.72.37/webhook/flux'  // FOXAI 服务器
         ];
-        let API_BASE_URL = API_ENDPOINTS[0]; // 默认使用第一个
+        let API_BASE_URL = API_ENDPOINTS[0]; // 使用指定服务器
         
         const form = document.getElementById('imageForm');
         const generateBtn = document.getElementById('generateBtn');
@@ -1112,7 +1109,7 @@
             
             if (workingEndpoint) {
                 statusIndicator.className = 'status-indicator status-online';
-                statusIndicator.textContent = `✅ FOXAI 服务器在线 (${workingEndpoint.split('/').pop()})`;
+                statusIndicator.textContent = '✅ FOXAI 服务器在线';
                 
                 // 3秒后隐藏状态指示器
                 setTimeout(() => {
@@ -1120,7 +1117,7 @@
                 }, 3000);
             } else {
                 statusIndicator.className = 'status-indicator status-offline';
-                statusIndicator.textContent = '❌ FOXAI 所有端点都无法连接';
+                statusIndicator.textContent = '❌ FOXAI 服务器无法连接';
                 
                 // 显示详细错误信息
                 setTimeout(() => {

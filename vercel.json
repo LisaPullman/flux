@@ -1,6 +1,8 @@
 {
   "version": 2,
   "name": "foxai-flux",
+  "buildCommand": "",
+  "outputDirectory": ".",
   "rewrites": [
     {
       "source": "/test",

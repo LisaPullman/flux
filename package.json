@@ -1,0 +1,24 @@
+{
+  "name": "foxai-flux",
+  "version": "1.0.0",
+  "description": "FOXAI FLUX - AI Image Generator",
+  "main": "index.html",
+  "scripts": {
+    "dev": "vercel dev",
+    "build": "echo 'Static site - no build needed'",
+    "start": "echo 'Static site - use vercel dev for local development'"
+  },
+  "keywords": [
+    "ai",
+    "image-generation",
+    "flux",
+    "foxai",
+    "vercel"
+  ],
+  "author": "FOXAI",
+  "license": "MIT",
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "type": "module"
+}
